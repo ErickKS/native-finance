@@ -5,12 +5,12 @@ module.exports = {
   theme: {
     colors: {
       primary: "#ED3F40",
-      light: "#D6D4CE",
-      dark: "#121212",
+      light: "#E0DED9",
+      dark: "#222222",
 
       white: "#FFFFFF",
       black: "#000000",
-      gray: "#9C9B98",
+      gray: "#D6D4CF",
       transparent: "transparent",
     },
 
