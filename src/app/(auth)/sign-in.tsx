@@ -5,6 +5,7 @@ import { Button } from "@/components/button";
 import { useState } from "react";
 import { Input } from "@/components/input";
 import { useRouter } from "expo-router";
+import { shadow } from "@/constants/styles";
 
 export default function SignIn() {
   const router = useRouter();
@@ -12,13 +13,13 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
   function handleSignIn() {
-    if (!email && !password) return;
+    // if (!email && !password) return;
 
     router.push("/");
   }
 
   return (
-    <View className="flex-1 px-5 bg-light">
+    <View className="flex-1 px-4 bg-light">
       <View className="items-center mt-20 mb-16 space-y-3">
         <Text className="text-4xl text-dark font-semibold">Hello Again!</Text>
         <Text className="max-w-[200px] w-full text-lg text-dark font-medium text-center leading-6">Welcome back you're been missed!</Text>
@@ -57,11 +58,11 @@ export default function SignIn() {
         <Text className="text-base text-dark/80 font-medium uppercase">Or</Text>
 
         <View className="flex-row space-x-5">
-          <TouchableOpacity className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl">
+          <TouchableOpacity style={shadow} className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl">
             <Ionicons name="logo-google" size={24} />
           </TouchableOpacity>
 
-          <TouchableOpacity className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl">
+          <TouchableOpacity style={shadow} className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl">
             <Ionicons name="logo-apple" size={24} />
           </TouchableOpacity>
         </View>
