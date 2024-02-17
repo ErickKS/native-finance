@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 
-interface AnimatedNumberProps {
-  value: number;
-}
-
-export function useAnimatedNumber(finalValue: number, animationDuration: number = 1500): [number] {
-  const [animatedValue, setAnimatedValue] = useState<number>(0);
+export function useAnimatedCurrency(finalValue: number, animationDuration: number = 1500): [string] {
+  const [animatedValue, setAnimatedValue] = useState<string>("");
 
   useEffect(() => {
     let start: number | null = null;
     let requestId: number;
+
+    const formatUSD = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
 
     const updateNumber = (timestamp: number) => {
       if (!start) start = timestamp;
@@ -25,10 +26,10 @@ export function useAnimatedNumber(finalValue: number, animationDuration: number 
       const targetValue = targetIntegerValue + targetDecimalValue;
 
       if (progress < animationDuration) {
-        setAnimatedValue(targetValue);
+        setAnimatedValue(formatUSD.format(targetValue));
         requestId = requestAnimationFrame(updateNumber);
       } else {
-        setAnimatedValue(finalValue);
+        setAnimatedValue(formatUSD.format(finalValue));
         cancelAnimationFrame(requestId);
       }
     };
@@ -36,7 +37,7 @@ export function useAnimatedNumber(finalValue: number, animationDuration: number 
     requestId = requestAnimationFrame(updateNumber);
 
     return () => cancelAnimationFrame(requestId);
-  }, [finalValue]);
+  }, [finalValue, animationDuration]);
 
   return [animatedValue];
 }
