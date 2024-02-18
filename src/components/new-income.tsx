@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CurrencyInput from "react-native-currency-input";
 
+import { useTransactionStore } from "@/stores/transaction-store";
+
 import { Button } from "@/components/button";
 
 import { incomeCategories } from "@/constants/transactions-category";
@@ -11,6 +13,8 @@ import { shadow } from "@/constants/styles";
 
 export function NewIncome() {
   const router = useRouter();
+  const { addTransaction } = useTransactionStore();
+
   const [expenseCategorySelected, setExpenseCategorySelected] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
 
@@ -18,6 +22,13 @@ export function NewIncome() {
     if (!expenseCategorySelected || !amount) {
       return Alert.alert("Transaction", "Report the category and the amount!");
     }
+
+    addTransaction({
+      type: "income",
+      category: expenseCategorySelected,
+      amount,
+      date: new Date(),
+    });
 
     router.navigate("/");
   }

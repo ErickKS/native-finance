@@ -1,17 +1,42 @@
 import { Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-import { useAnimatedCurrency } from "@/hooks/useAnimatedCurrency";
+import { useTransactionStore } from "@/stores/transaction-store";
 
 import { Nav } from "@/components/nav";
 import { TransactionItem } from "@/components/transaction-item";
 import { AnalyticsSection } from "@/components/analytics-section";
+import { Balance } from "@/components/balance";
 
 import { shadow } from "@/constants/styles";
 
+// import { useEffect } from "react";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function Home() {
-  const balance = 1203.32;
-  const [animatedValue] = useAnimatedCurrency(balance);
+  // useEffect(() => {
+  //   AsyncStorage.clear();
+  // }, []);
+
+  const { transactions } = useTransactionStore();
+  const lastTwoTransactions = transactions.slice(0, 2);
+
+  const expense = transactions.filter((item) => item.type === "expense");
+  const income = transactions.filter((item) => item.type === "income");
+
+  let total = 0;
+  let totalExpense = 0;
+  let totalIncome = 0;
+
+  transactions.forEach((item) => {
+    total += item.amount;
+  });
+  expense.forEach((expense) => {
+    totalExpense += expense.amount * -1;
+  });
+  income.forEach((income) => {
+    totalIncome += income.amount;
+  });
 
   return (
     <View className="flex-1 px-4">
@@ -24,19 +49,19 @@ export default function Home() {
         </View>
       </View>
 
-      <View className="mt-8 space-y-2">
-        <Text className="text-xl text-dark/80 font-medium">Total Balance</Text>
-        <Text className="text-4xl text-dark font-semibold">{animatedValue}</Text>
+      <View className="mt-8">
+        <Balance total={total} />
       </View>
 
-      <AnalyticsSection />
+      <AnalyticsSection expense={totalExpense} income={totalIncome} />
 
       <View className="flex-1 mt-8">
         <Text className="text-lg text-dark font-semibold">Last Transactions</Text>
 
         <View>
-          <TransactionItem name="food" value={-200} />
-          <TransactionItem name="pix" value={150} />
+          {lastTwoTransactions.map((transaction, index) => (
+            <TransactionItem key={index} category={transaction.category} amount={transaction.amount} date={transaction.date} />
+          ))}
         </View>
       </View>
 

@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CurrencyInput from "react-native-currency-input";
 
+import { useTransactionStore } from "@/stores/transaction-store";
+
 import { Button } from "@/components/button";
 
 import { expenseCategories } from "@/constants/transactions-category";
@@ -11,6 +13,7 @@ import { shadow } from "@/constants/styles";
 
 export function NewExpense() {
   const router = useRouter();
+  const { addTransaction } = useTransactionStore();
   const [expenseCategorySelected, setExpenseCategorySelected] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
 
@@ -18,6 +21,13 @@ export function NewExpense() {
     if (!expenseCategorySelected || !amount) {
       return Alert.alert("Transaction", "Report the category and the amount!");
     }
+
+    addTransaction({
+      type: "expense",
+      category: expenseCategorySelected,
+      amount: amount * -1,
+      date: new Date(),
+    });
 
     router.navigate("/");
   }
@@ -57,8 +67,8 @@ export function NewExpense() {
             value={amount}
             onChangeValue={setAmount}
             prefix="$ "
-            delimiter="."
-            separator=","
+            delimiter=","
+            separator="."
             precision={2}
             minValue={0}
             placeholder="$ 00.00"

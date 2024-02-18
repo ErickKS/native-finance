@@ -1,24 +1,27 @@
 import { View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
-const datasets = [
-  {
-    name: "Expenses",
-    value: 130,
-    color: "#ED3F40",
-  },
-  {
-    name: "Incomes",
-    value: 130,
-    color: "#FFFFFF",
-  },
-];
+interface ChartProps {
+  expense: number;
+  income: number;
+}
 
-export function Chart() {
+export function Chart({ expense, income }: ChartProps) {
   return (
     <View className="flex-1">
       <PieChart
-        data={datasets}
+        data={[
+          {
+            name: "Expenses",
+            value: expense,
+            color: "#ED3F40",
+          },
+          {
+            name: "Income",
+            value: income,
+            color: "#FFFFFF",
+          },
+        ]}
         accessor="value"
         backgroundColor="transparent"
         width={160}
