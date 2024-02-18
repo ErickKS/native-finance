@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { useState, useEffect } from "react";
+import { Image, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { useTransactionStore } from "@/stores/transaction-store";
@@ -9,14 +10,23 @@ import { AnalyticsSection } from "@/components/analytics-section";
 import { Balance } from "@/components/balance";
 
 import { shadow } from "@/constants/styles";
+import { useUser } from "@clerk/clerk-expo";
 
-// import { useEffect } from "react";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   // useEffect(() => {
   //   AsyncStorage.clear();
   // }, []);
+
+  const { user } = useUser();
+  const [firstName, setFirstName] = useState(user?.firstName);
+
+  useEffect(() => {
+    if (!user) return;
+
+    setFirstName(user.firstName);
+  }, [user]);
 
   const { transactions } = useTransactionStore();
   const lastTwoTransactions = transactions.slice(0, 2);
@@ -42,9 +52,9 @@ export default function Home() {
     <View className="flex-1">
       <View className="flex-row justify-between items-center mt-5 px-4">
         <View style={shadow} className="flex-row items-center h-12 pr-3 bg-gray rounded-2xl">
-          <View className="h-12 w-12 rounded-2xl border-2 border-dark bg-gray/80" />
+          <Image source={{ uri: user?.imageUrl }} className="h-12 w-12 rounded-2xl bg-gray/80" />
 
-          <Text className="ml-3 mr-1 text-base text-dark font-medium">Hello, Erick</Text>
+          <Text className="ml-3 mr-1 text-base text-dark font-medium">Hello, {firstName}</Text>
           <Text className="text-base"> 👋</Text>
         </View>
       </View>

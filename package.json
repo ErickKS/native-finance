@@ -13,6 +13,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^0.20.5",
     "@expo-google-fonts/poppins": "^0.2.3",
     "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "^1.22.0",
@@ -37,7 +38,8 @@
     "react-native-svg": "^14.1.0",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "~0.19.6",
-    "zustand": "^4.5.1"
+    "zustand": "^4.5.1",
+    "expo-secure-store": "~12.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
