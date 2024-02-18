@@ -1,13 +1,13 @@
 import { Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 import { useAnimatedCurrency } from "@/hooks/useAnimatedCurrency";
 
 import { Nav } from "@/components/nav";
-
-import { shadow } from "@/constants/styles";
 import { TransactionItem } from "@/components/transaction-item";
 import { AnalyticsSection } from "@/components/analytics-section";
-import { Feather } from "@expo/vector-icons";
+
+import { shadow } from "@/constants/styles";
 
 export default function Home() {
   const balance = 1203.32;
@@ -31,7 +31,7 @@ export default function Home() {
 
       <AnalyticsSection />
 
-      <View className="mt-8">
+      <View className="flex-1 mt-8">
         <Text className="text-lg text-dark font-semibold">Last Transactions</Text>
 
         <View>

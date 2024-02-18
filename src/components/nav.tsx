@@ -8,7 +8,7 @@ export function Nav() {
   const route = useRoute();
 
   return (
-    <View className="absolute bottom-3 left-4 right-4 flex-row justify-between items-center">
+    <View className="py-3 flex-row justify-between items-center">
       <View className="flex-row items-center h-14 px-1 bg-dark rounded-full">
         <TouchableOpacity
           activeOpacity={0.8}
@@ -41,7 +41,11 @@ export function Nav() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity activeOpacity={0.8} className="justify-center items-center h-14 w-14 bg-dark rounded-full">
+      <TouchableOpacity
+        onPress={() => router.navigate("/new-transaction")}
+        activeOpacity={0.8}
+        className="justify-center items-center h-14 w-14 bg-dark rounded-full"
+      >
         <Feather name="plus" size={26} color={"#E0DED9"} />
       </TouchableOpacity>
     </View>
