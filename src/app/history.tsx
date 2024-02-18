@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import { TransactionItem } from "@/components/transaction-item";
 import { Nav } from "@/components/nav";
 import { useTransactionStore } from "@/stores/transaction-store";
+import { Feather } from "@expo/vector-icons";
 
 export default function History() {
-  const { transactions } = useTransactionStore();
+  const { transactions, deleteTransaction } = useTransactionStore();
+  const [swipeableEnabled, setSwipeableEnabled] = useState(true);
+
   const filters = ["day", "week", "month", "year"] as const;
   type Filter = (typeof filters)[number];
   const [selectedFilter, setSelectedFilter] = useState<Filter>("day");
@@ -33,13 +37,29 @@ export default function History() {
     return transactions.filter((transaction) => new Date(transaction.date) >= filterDate);
   };
 
+  const rightSwipeActions = (id: string) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          deleteTransaction(id);
+          setSwipeableEnabled(false);
+        }}
+        activeOpacity={0.8}
+        className="flex-row justify-center items-center h-12 px-3 mt-4 mr-4 bg-primary rounded-2xl"
+      >
+        <Feather name={"trash"} size={20} color={"#E0DED9"} />
+        <Text className="ml-2 text-sm text-white font-medium">Delete</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View className="flex-1 px-4">
-      <View className="mt-5 mb-6 items-center">
+    <View className="flex-1">
+      <View className="mt-5 mb-6 items-center mx-4">
         <Text className="text-xl text-dark font-semibold">Transactions History</Text>
       </View>
 
-      <View className="flex-row h-10 p-1 rounded-xl bg-dark" style={{ gap: 8 }}>
+      <View className="flex-row h-10 p-1 mx-4 rounded-xl bg-dark " style={{ gap: 8 }}>
         {filters.map((filter) => (
           <TouchableOpacity
             key={filter}
@@ -55,8 +75,15 @@ export default function History() {
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1 mt-3">
         {filteredTransactions().length > 0 ? (
           <>
-            {filteredTransactions().map((transaction, index) => (
-              <TransactionItem key={index} category={transaction.category} amount={transaction.amount} date={transaction.date} />
+            {filteredTransactions().map((transaction) => (
+              <Swipeable
+                renderRightActions={() => (swipeableEnabled ? rightSwipeActions(transaction.id) : null)}
+                key={transaction.id}
+                enabled={swipeableEnabled}
+                onSwipeableWillClose={() => setSwipeableEnabled(true)}
+              >
+                <TransactionItem category={transaction.category} amount={transaction.amount} date={transaction.date} />
+              </Swipeable>
             ))}
           </>
         ) : (

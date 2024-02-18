@@ -8,7 +8,7 @@ export function Nav() {
   const route = useRoute();
 
   return (
-    <View className="py-3 flex-row justify-between items-center">
+    <View className="py-3 flex-row justify-between items-center mx-4">
       <View className="flex-row items-center h-14 px-1 bg-dark rounded-full">
         <TouchableOpacity
           activeOpacity={0.8}
@@ -32,12 +32,12 @@ export function Nav() {
 
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => router.navigate("/account")}
-          className={`flex-row items-center h-12 rounded-full px-4 ${route.name === "account" && "bg-light"}`}
+          onPress={() => router.navigate("/profile")}
+          className={`flex-row items-center h-12 rounded-full px-4 ${route.name === "profile" && "bg-light"}`}
         >
-          <Feather name="user" size={26} color={route.name === "account" ? "#222222" : "#E0DED9"} />
+          <Feather name="user" size={26} color={route.name === "profile" ? "#222222" : "#E0DED9"} />
 
-          {route.name === "account" ? <Text className="ml-1 text-xs text-dark font-medium">Account</Text> : null}
+          {route.name === "profile" ? <Text className="ml-1 text-xs text-dark font-medium">Profile</Text> : null}
         </TouchableOpacity>
       </View>
 

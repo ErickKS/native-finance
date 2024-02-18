@@ -31,7 +31,7 @@ export function TransactionItem({ category, amount, date }: TransactionItemProps
   const time = new Date(date);
 
   return (
-    <View className="flex-row items-center mt-4">
+    <View className="flex-row items-center mt-4 pr-4 mx-4 bg-light">
       <View className="justify-center items-center h-12 w-12 bg-dark rounded-2xl">
         <MaterialCommunityIcons name={getIcon(category)} size={20} color={"#E0DED9"} />
       </View>

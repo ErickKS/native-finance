@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 import { Loading } from "@/components/loading";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function MainRootLayout() {
   const [fontsLoaded] = useFonts({
@@ -15,7 +16,11 @@ export default function MainRootLayout() {
 
   if (!fontsLoaded) return <Loading />;
 
-  return <RootLayout />;
+  return (
+    <GestureHandlerRootView className="flex-1">
+      <RootLayout />
+    </GestureHandlerRootView>
+  );
 }
 
 function RootLayout() {

@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CurrencyInput from "react-native-currency-input";
+import uuid from "react-native-uuid";
 
 import { useTransactionStore } from "@/stores/transaction-store";
 
@@ -24,6 +25,7 @@ export function NewIncome() {
     }
 
     addTransaction({
+      id: uuid.v4() as string,
       type: "income",
       category: expenseCategorySelected,
       amount,

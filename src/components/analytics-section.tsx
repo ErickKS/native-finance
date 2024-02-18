@@ -15,7 +15,7 @@ export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
   });
 
   return (
-    <View className="mt-7">
+    <View className="mt-7 px-4">
       <View className="flex-row">
         <Text className="text-lg text-dark font-semibold">Analytics</Text>
 

@@ -39,8 +39,8 @@ export default function Home() {
   });
 
   return (
-    <View className="flex-1 px-4">
-      <View className="flex-row justify-between items-center mt-5">
+    <View className="flex-1">
+      <View className="flex-row justify-between items-center mt-5 px-4">
         <View style={shadow} className="flex-row items-center h-12 pr-3 bg-gray rounded-2xl">
           <View className="h-12 w-12 rounded-2xl border-2 border-dark bg-gray/80" />
 
@@ -49,14 +49,14 @@ export default function Home() {
         </View>
       </View>
 
-      <View className="mt-8">
+      <View className="mt-8 px-4">
         <Balance total={total} />
       </View>
 
       <AnalyticsSection expense={totalExpense} income={totalIncome} />
 
       <View className="flex-1 mt-8">
-        <Text className="text-lg text-dark font-semibold">Last Transactions</Text>
+        <Text className="text-lg text-dark font-semibold px-4">Last Transactions</Text>
 
         <View>
           {lastTwoTransactions.map((transaction, index) => (
