@@ -42,7 +42,7 @@ export default function History() {
       <TouchableOpacity
         onPress={() => {
           deleteTransaction(id);
-          setSwipeableEnabled(false);
+          setSwipeableEnabled(true);
         }}
         activeOpacity={0.8}
         className="flex-row justify-center items-center h-12 px-3 mt-4 mr-4 bg-primary rounded-2xl"
