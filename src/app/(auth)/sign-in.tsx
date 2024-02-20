@@ -17,11 +17,10 @@ enum Strategy {
 }
 
 export default function SignIn() {
-  const router = useRouter();
   useWarmUpBrowser();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
@@ -45,7 +44,7 @@ export default function SignIn() {
   }
 
   function handleSignIn() {
-    // if (!email && !password) return;
+    // if (!email) return;
 
     router.push("/");
   }
@@ -58,7 +57,7 @@ export default function SignIn() {
       </View>
 
       <View>
-        <Input onChangeText={(text) => setEmail(text)} blurOnSubmit={true} placeholder="Enter Email">
+        <Input onChangeText={(text) => setEmail(text)} blurOnSubmit={true} autoCapitalize="none" placeholder="Enter Email">
           <Input.Icon>
             <MaterialCommunityIcons name="email" size={24} color={"#222222"} />
           </Input.Icon>
@@ -68,7 +67,7 @@ export default function SignIn() {
 
         <Text className="text-center text-base text-dark mt-5">
           Create a new account?{" "}
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => router.push("/(auth)/sign-up")}>
             <Text className="pr-2 text-base text-dark font-semibold">Sign Up</Text>
           </TouchableWithoutFeedback>
         </Text>

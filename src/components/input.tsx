@@ -10,7 +10,7 @@ interface InputIconProps {
 
 function Input({ children, ...props }: InputProps) {
   return (
-    <View className="flex-row items-center justify-center h-16 px-4 border border-dark rounded-xl space-x-4 mb-5">
+    <View className="flex-row flex-grow items-center justify-center h-16 px-4 border border-dark rounded-xl space-x-4 mb-5">
       {children}
 
       <TextInput placeholderTextColor={"#222222"} className="relative top-0.5 flex-1 h-full text-base text-dark font-regular" {...props} />

@@ -91,6 +91,14 @@ function RootLayout() {
         />
 
         <Stack.Screen
+          name="new-transaction"
+          options={{
+            headerShown: false,
+            animation: "slide_from_bottom",
+            contentStyle: { backgroundColor: "#E0DED9" },
+          }}
+        />
+        <Stack.Screen
           name="(auth)/sign-in"
           options={{
             headerShown: false,
@@ -100,10 +108,10 @@ function RootLayout() {
         />
 
         <Stack.Screen
-          name="new-transaction"
+          name="(auth)/sign-up"
           options={{
             headerShown: false,
-            animation: "slide_from_bottom",
+            animation: "slide_from_right",
             contentStyle: { backgroundColor: "#E0DED9" },
           }}
         />
