@@ -1,7 +1,8 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useRoute } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
+
+import { Home2, ClipboardText, User, Add } from "iconsax-react-native";
 
 export function Nav() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export function Nav() {
           onPress={() => router.navigate("/")}
           className={`flex-row items-center h-12 rounded-full px-4 ${route.name === "index" && "bg-light"}`}
         >
-          <Feather name="home" size={26} color={route.name === "index" ? "#222222" : "#E0DED9"} />
+          <Home2 size={26} color={route.name === "index" ? "#222222" : "#E0DED9"} variant={route.name === "index" ? "Bold" : "Outline"} />
 
           {route.name === "index" ? <Text className="ml-1 text-xs text-dark font-medium">Home</Text> : null}
         </TouchableOpacity>
@@ -25,7 +26,11 @@ export function Nav() {
           onPress={() => router.navigate("/history")}
           className={`flex-row items-center h-12 rounded-full px-4 ${route.name === "history" && "bg-light"}`}
         >
-          <Feather name="bar-chart-2" size={26} color={route.name === "history" ? "#222222" : "#E0DED9"} />
+          <ClipboardText
+            size={26}
+            color={route.name === "history" ? "#222222" : "#E0DED9"}
+            variant={route.name === "history" ? "Bold" : "Outline"}
+          />
 
           {route.name === "history" ? <Text className="ml-1 text-xs text-dark font-medium">History</Text> : null}
         </TouchableOpacity>
@@ -35,7 +40,11 @@ export function Nav() {
           onPress={() => router.navigate("/profile")}
           className={`flex-row items-center h-12 rounded-full px-4 ${route.name === "profile" && "bg-light"}`}
         >
-          <Feather name="user" size={26} color={route.name === "profile" ? "#222222" : "#E0DED9"} />
+          <User
+            size={26}
+            color={route.name === "profile" ? "#222222" : "#E0DED9"}
+            variant={route.name === "profile" ? "Bold" : "Outline"}
+          />
 
           {route.name === "profile" ? <Text className="ml-1 text-xs text-dark font-medium">Profile</Text> : null}
         </TouchableOpacity>
@@ -46,7 +55,7 @@ export function Nav() {
         activeOpacity={0.8}
         className="justify-center items-center h-14 w-14 bg-dark rounded-full"
       >
-        <Feather name="plus" size={26} color={"#E0DED9"} />
+        <Add size={32} color={"#E0DED9"} />
       </TouchableOpacity>
     </View>
   );

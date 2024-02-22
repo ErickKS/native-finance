@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Box1 } from "iconsax-react-native";
 
 import { Chart } from "./chart";
 
@@ -43,7 +43,7 @@ export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
 
         <View className="flex-1" style={{ gap: 16 }}>
           <View className="justify-between p-4 bg-primary rounded-2xl flex-grow">
-            <Feather name="box" size={20} color={"#FFFFFF"} />
+            <Box1 size={20} color={"#FFFFFF"} />
 
             <View>
               <Text className="text-sm text-white font-medium">Expenses</Text>
@@ -51,7 +51,7 @@ export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
             </View>
           </View>
           <View className="justify-between p-4 bg-dark rounded-2xl flex-grow">
-            <Feather name="box" size={20} color={"#FFFFFF"} />
+            <Box1 size={20} color={"#FFFFFF"} />
             <View>
               <Text className="text-sm text-white font-medium">Income</Text>
               <Text className="text-xl text-white font-medium">{formatUSD.format(income)}</Text>
