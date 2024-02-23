@@ -1,47 +1,16 @@
 import { useState } from "react";
-import { Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Text, TouchableWithoutFeedback, View } from "react-native";
 import { useRouter } from "expo-router";
-import { useOAuth } from "@clerk/clerk-expo";
-
-import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
+import { Sms } from "iconsax-react-native";
 
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 
-import { shadow } from "@/constants/styles";
-
-enum Strategy {
-  Apple = "oauth_apple",
-  Google = "oauth_google",
-}
+import { AccountAuth } from "@/components/accounts-auth";
 
 export default function SignIn() {
-  useWarmUpBrowser();
   const router = useRouter();
-
   const [email, setEmail] = useState("");
-
-  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
-  const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
-
-  async function onSelectAuth(strategy: Strategy) {
-    const selectedAuth = {
-      [Strategy.Apple]: appleAuth,
-      [Strategy.Google]: googleAuth,
-    }[strategy];
-
-    try {
-      const { createdSessionId, setActive } = await selectedAuth();
-
-      if (createdSessionId) {
-        setActive!({ session: createdSessionId });
-        router.push("/");
-      }
-    } catch (err) {
-      console.error("OAuth error: ", err);
-    }
-  }
 
   function handleSignIn() {
     // if (!email) return;
@@ -59,7 +28,7 @@ export default function SignIn() {
       <View>
         <Input onChangeText={(text) => setEmail(text)} blurOnSubmit={true} autoCapitalize="none" placeholder="Enter Email">
           <Input.Icon>
-            <MaterialCommunityIcons name="email" size={24} color={"#222222"} />
+            <Sms size={24} color={"#222222"} variant="Bold" />
           </Input.Icon>
         </Input>
 
@@ -73,26 +42,10 @@ export default function SignIn() {
         </Text>
       </View>
 
-      <View className="flex-1 items-center justify-end mb-8 space-y-4">
-        <Text className="text-base text-dark/80 font-medium uppercase">Or</Text>
+      <View className="flex-1 items-center justify-end mb-8">
+        <Text className="mb-4 text-base text-dark/80 font-medium uppercase">Or</Text>
 
-        <View className="flex-row space-x-5">
-          <TouchableOpacity
-            onPress={() => onSelectAuth(Strategy.Google)}
-            style={shadow}
-            className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl"
-          >
-            <Ionicons name="logo-google" size={24} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => onSelectAuth(Strategy.Apple)}
-            style={shadow}
-            className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl"
-          >
-            <Ionicons name="logo-apple" size={24} />
-          </TouchableOpacity>
-        </View>
+        <AccountAuth />
       </View>
     </View>
   );

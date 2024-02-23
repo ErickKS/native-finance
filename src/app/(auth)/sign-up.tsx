@@ -1,27 +1,16 @@
 import { useState } from "react";
-import { TouchableOpacity, View, Text, TouchableWithoutFeedback } from "react-native";
-import { useOAuth, useSignUp } from "@clerk/clerk-expo";
+import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { useSignUp } from "@clerk/clerk-expo";
 import { router } from "expo-router";
-import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-
-import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
+import { Key, Lock1, Sms, User } from "iconsax-react-native";
 
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 
-import { shadow } from "@/constants/styles";
-
-enum Strategy {
-  Apple = "oauth_apple",
-  Google = "oauth_google",
-}
+import { AccountAuth } from "@/components/accounts-auth";
 
 export default function SignUp() {
-  useWarmUpBrowser();
   const { isLoaded, signUp, setActive } = useSignUp();
-
-  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
-  const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -64,24 +53,6 @@ export default function SignUp() {
     }
   }
 
-  async function onSelectAuth(strategy: Strategy) {
-    const selectedAuth = {
-      [Strategy.Apple]: appleAuth,
-      [Strategy.Google]: googleAuth,
-    }[strategy];
-
-    try {
-      const { createdSessionId, setActive } = await selectedAuth();
-
-      if (createdSessionId) {
-        setActive!({ session: createdSessionId });
-        router.push("/");
-      }
-    } catch (err) {
-      console.error("OAuth error: ", err);
-    }
-  }
-
   return (
     <View className="flex-1 px-4 bg-light">
       {!pendingVerification && (
@@ -95,20 +66,20 @@ export default function SignUp() {
             <View className="flex-row" style={{ gap: 16 }}>
               <Input onChangeText={(text) => setFirstName(text)} blurOnSubmit={true} placeholder="First Name">
                 <Input.Icon>
-                  <Feather name="user" size={24} color={"#222222"} />
+                  <User size={24} color={"#222222"} variant="Bold" />
                 </Input.Icon>
               </Input>
 
               <Input onChangeText={(text) => setLastName(text)} blurOnSubmit={true} placeholder="Last Name">
                 <Input.Icon>
-                  <Feather name="user" size={24} color={"#222222"} />
+                  <User size={24} color={"#222222"} variant="Bold" />
                 </Input.Icon>
               </Input>
             </View>
 
             <Input onChangeText={(text) => setEmailAddress(text)} blurOnSubmit={true} autoCapitalize="none" placeholder="Email">
               <Input.Icon>
-                <MaterialCommunityIcons name="email" size={24} color={"#222222"} />
+                <Sms size={24} color={"#222222"} variant="Bold" />
               </Input.Icon>
             </Input>
 
@@ -120,7 +91,7 @@ export default function SignUp() {
               placeholder="Password"
             >
               <Input.Icon>
-                <MaterialCommunityIcons name="key-outline" size={24} color={"#222222"} />
+                <Lock1 size={24} color={"#222222"} variant="Bold" />
               </Input.Icon>
             </Input>
 
@@ -128,32 +99,16 @@ export default function SignUp() {
 
             <Text className="text-center text-base text-dark mt-5">
               Have an account?{" "}
-              <TouchableWithoutFeedback onPress={() => router.push("/(auth)/sign-in")}>
+              <TouchableWithoutFeedback onPress={() => router.back()}>
                 <Text className="pr-2 text-base text-dark font-semibold">Sign In</Text>
               </TouchableWithoutFeedback>
             </Text>
           </View>
 
-          <View className="flex-1 items-center justify-end mb-8 space-y-4">
-            <Text className="text-base text-dark/80 font-medium uppercase">Or</Text>
+          <View className="flex-1 items-center justify-end mb-8">
+            <Text className="mb-4 text-base text-dark/80 font-medium uppercase">Or</Text>
 
-            <View className="flex-row space-x-5">
-              <TouchableOpacity
-                onPress={() => onSelectAuth(Strategy.Google)}
-                style={shadow}
-                className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl"
-              >
-                <Ionicons name="logo-google" size={24} />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => onSelectAuth(Strategy.Apple)}
-                style={shadow}
-                className="justify-center items-center h-12 max-w-[132px] w-full bg-gray rounded-xl"
-              >
-                <Ionicons name="logo-apple" size={24} />
-              </TouchableOpacity>
-            </View>
+            <AccountAuth />
           </View>
         </View>
       )}
@@ -168,7 +123,7 @@ export default function SignUp() {
           <View>
             <Input onChangeText={(text) => setCode(text)} blurOnSubmit={true} placeholder="Enter Code">
               <Input.Icon>
-                <MaterialCommunityIcons name="key-outline" size={24} color={"#222222"} />
+                <Key size={24} color={"#222222"} variant="Bold" />
               </Input.Icon>
             </Input>
 
