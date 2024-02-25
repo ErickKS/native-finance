@@ -1,6 +1,8 @@
 import { Text, View } from "react-native";
 import { Box1 } from "iconsax-react-native";
 
+import { useCurrency } from "@/hooks/useCurrency";
+
 import { Chart } from "./chart";
 
 interface AnalyticsSectionProps {
@@ -9,10 +11,8 @@ interface AnalyticsSectionProps {
 }
 
 export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
-  const formatUSD = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  const formattedExpense = useCurrency(expense);
+  const formattedIncome = useCurrency(income);
 
   return (
     <View className="mt-7 px-4">
@@ -47,14 +47,14 @@ export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
 
             <View>
               <Text className="text-sm text-white font-medium">Expenses</Text>
-              <Text className="text-xl text-white font-medium">{formatUSD.format(expense)}</Text>
+              <Text className="text-xl text-white font-medium">{formattedExpense}</Text>
             </View>
           </View>
           <View className="justify-between p-4 bg-dark rounded-2xl flex-grow">
             <Box1 size={20} color={"#FFFFFF"} />
             <View>
               <Text className="text-sm text-white font-medium">Income</Text>
-              <Text className="text-xl text-white font-medium">{formatUSD.format(income)}</Text>
+              <Text className="text-xl text-white font-medium">{formattedIncome}</Text>
             </View>
           </View>
         </View>

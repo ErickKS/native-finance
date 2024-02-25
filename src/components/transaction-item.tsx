@@ -1,6 +1,8 @@
 import { Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import { useCurrency } from "@/hooks/useCurrency";
+
 interface TransactionItemProps {
   category: string;
   amount: number;
@@ -8,10 +10,7 @@ interface TransactionItemProps {
 }
 
 export function TransactionItem({ category, amount, date }: TransactionItemProps) {
-  const formatUSD = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  const formattedExpense = useCurrency(amount);
 
   function getIcon(category: string) {
     const categoryIcons: { [key: string]: string } = {
@@ -45,7 +44,7 @@ export function TransactionItem({ category, amount, date }: TransactionItemProps
       </View>
 
       <View>
-        <Text className={`text-lg font-bold ${amount > 0 ? "text-dark" : "text-primary"}`}>{formatUSD.format(amount)}</Text>
+        <Text className={`text-lg font-bold ${amount > 0 ? "text-dark" : "text-primary"}`}>{formattedExpense}</Text>
       </View>
     </View>
   );
