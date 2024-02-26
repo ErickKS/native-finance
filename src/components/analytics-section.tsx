@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Box1 } from "iconsax-react-native";
+import { Box1, Icon, ReceiptSearch } from "iconsax-react-native";
 
 import { useCurrency } from "@/hooks/useCurrency";
 
@@ -30,15 +30,25 @@ export function AnalyticsSection({ expense, income }: AnalyticsSectionProps) {
             <Text className="text-sm text-white font-medium">Finance Trend</Text>
           </View>
 
-          <Chart expense={expense} income={income} />
+          {expense && income === 0 ? (
+            <View className="items-center justify-center mt-12">
+              <ReceiptSearch size={32} color="#FFFFFF" />
+              <Text className="text-sm text-white font-medium mt-1">No transactions</Text>
+              <Text className="text-sm text-white font-medium">to analyze</Text>
+            </View>
+          ) : (
+            <>
+              <Chart expense={expense} income={income} />
 
-          <View className="flex-row justify-center p-3">
-            {expense > income ? (
-              <Text className="text-sm text-white font-medium text-center">Expenses outweigh income</Text>
-            ) : (
-              <Text className="text-sm text-white font-medium text-center">More income than expenses</Text>
-            )}
-          </View>
+              <View className="flex-row justify-center p-3">
+                {expense > income ? (
+                  <Text className="text-sm text-white font-medium text-center">Expenses outweigh income</Text>
+                ) : (
+                  <Text className="text-sm text-white font-medium text-center">More income than expenses</Text>
+                )}
+              </View>
+            </>
+          )}
         </View>
 
         <View className="flex-1" style={{ gap: 16 }}>

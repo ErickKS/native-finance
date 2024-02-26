@@ -69,9 +69,17 @@ export default function Home() {
         <Text className="text-lg text-dark font-semibold px-4">Last Transactions</Text>
 
         <View>
-          {lastTwoTransactions.map((transaction, index) => (
-            <TransactionItem key={index} category={transaction.category} amount={transaction.amount} date={transaction.date} />
-          ))}
+          {transactions.length <= 0 ? (
+            <View className="justify-center items-center mt-4 mx-4 p-4 bg-gray rounded-2xl">
+              <Text className="text-sm text-dark font-medium text-center">You don't have any transactions, please add one.</Text>
+            </View>
+          ) : (
+            <>
+              {lastTwoTransactions.map((transaction, index) => (
+                <TransactionItem key={index} category={transaction.category} amount={transaction.amount} date={transaction.date} />
+              ))}
+            </>
+          )}
         </View>
       </View>
 

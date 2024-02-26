@@ -87,8 +87,8 @@ export default function History() {
             ))}
           </>
         ) : (
-          <View className="flex-1 justify-center items-center">
-            <Text>Empty</Text>
+          <View className="justify-center items-center mt-4 mx-4 p-4 bg-gray rounded-2xl">
+            <Text className="text-sm text-dark font-medium text-center">You don't have any transactions, please add one.</Text>
           </View>
         )}
       </ScrollView>
